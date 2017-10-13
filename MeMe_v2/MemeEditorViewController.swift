@@ -61,10 +61,10 @@ extension MemeEditorViewController: UITextFieldDelegate {
     func configureText(_ textField: UITextField,_ withText: String) {
         
         let memeTextAttributes:[String:Any] = [
-            NSStrokeColorAttributeName: UIColor.black,
-            NSForegroundColorAttributeName: UIColor.white,
-            NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSStrokeWidthAttributeName: -2.0]
+            NSAttributedStringKey.strokeColor.rawValue: UIColor.black,
+            NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
+            NSAttributedStringKey.font.rawValue: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSAttributedStringKey.strokeWidth.rawValue: -2.0]
         //Set Text Attributes
         textField.defaultTextAttributes = memeTextAttributes
         textField.backgroundColor = UIColor.clear
@@ -94,9 +94,9 @@ extension MemeEditorViewController: UIImagePickerControllerDelegate {
     func sourceOfImagePicker (_ sourceChoice: UIImagePickerControllerSourceType) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
         imagePicker.sourceType = sourceChoice
+        present(imagePicker, animated: true, completion: nil)
+        
     }
     
     @IBAction func pickAnImageFromAlbum(_ sender: AnyObject) {
@@ -126,7 +126,7 @@ extension MemeEditorViewController: UIImagePickerControllerDelegate {
 //Mark: UINavigationControllerDelegate
 extension MemeEditorViewController: UINavigationControllerDelegate {
     
-    func keyboardWillShow(_ notification: NSNotification) {
+    @objc func keyboardWillShow(_ notification: NSNotification) {
         
         if bottomTextfield.isFirstResponder {
             
@@ -135,7 +135,7 @@ extension MemeEditorViewController: UINavigationControllerDelegate {
         
     }
     
-    func keyboardWillHide(_ notification: NSNotification) {
+    @objc func keyboardWillHide(_ notification: NSNotification) {
         
         if bottomTextfield.isFirstResponder {
             
@@ -218,7 +218,7 @@ extension MemeEditorViewController: UINavigationControllerDelegate {
         
     }
     
-    //@IBAction func
+    
     @IBAction func cancelMeme(_ sender: AnyObject) {
         //Reset UIImageView and UITextField to default Attributes
         configureText(topTextfield, "TOP")
